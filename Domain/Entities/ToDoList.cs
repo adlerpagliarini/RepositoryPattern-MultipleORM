@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class ToDoList
+    public class ToDoList : IIdentityEntity
     {
         public int Id { get; set; }
 

@@ -1,7 +1,7 @@
-﻿using Infrastructure.Interfaces.DBConfiguration.Dapper;
+﻿using Domain.Entities;
+using Infrastructure.Interfaces.DBConfiguration.Dapper;
 using Infrastructure.Interfaces.Repositories.Dapper;
-using Infrastructure.Repositories.Dapper;
-using System.Data.SqlClient;
+using System;
 
 namespace Infrastructure.DBConfiguration.Dapper
 {
@@ -14,9 +14,9 @@ namespace Infrastructure.DBConfiguration.Dapper
             ConnectionString = connectionString;
         }
 
-        public IRepositoryDapper<TEntity> CreateInstance<TEntity>() where TEntity : class
+        public IRepositoryDapperAsync<TEntity> CreateInstance<TEntity>() where TEntity : class, IIdentityEntity
         {
-            return new RepositoryDapper<TEntity>(new SqlConnection(ConnectionString));
+            throw new Exception();//return new RepositoryDapperAsync<TEntity>(new SqlConnection(ConnectionString));
         }
     }
 }

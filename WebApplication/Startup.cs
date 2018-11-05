@@ -2,7 +2,9 @@
 using Infrastructure.DBConfiguration.EFCore;
 using Infrastructure.Interfaces.DBConfiguration.Dapper;
 using Infrastructure.Interfaces.Repositories.Dapper;
+using Infrastructure.Interfaces.Repositories.EFCore;
 using Infrastructure.Repositories.Dapper;
+using Infrastructure.Repositories.EFCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,14 +29,19 @@ namespace WebApplication
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped(typeof(IRepositoryEFCore<>), typeof(RepositoryEFCore<>));
             /* Using IOptions on constructor to create a instance of SqlConnection */
-            services.AddScoped(typeof(IRepositoryDapper<>), typeof(RepositoryDapper<>));
+            //services.AddScoped(typeof(IRepositoryDapper<>), typeof(RepositoryDapper<>));
             var databaseSettingsSection = Configuration.GetSection("ConnectionStrings");
             services.Configure<DataOptionFactory>(databaseSettingsSection);
 
             /* Using a Factory on constructor to create a instance of RepostioryDapper
              * with IDBConnection on constructor to return a instance of SqlConnection */
             services.AddScoped<IDataServiceFactory, DataServiceFactory>(_ => new DataServiceFactory(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddScoped(typeof(IRepositoryDapperAsync<>), typeof(RepositoryDapperAsync<>));
+
+            services.AddScoped<RepositoryDapperUser>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

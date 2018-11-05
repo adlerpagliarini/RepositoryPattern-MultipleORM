@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Domain.Entities;
 using Infrastructure.DBConfiguration.Dapper;
-using Infrastructure.Interfaces.Repositories;
 using Infrastructure.Interfaces.Repositories.Dapper;
 using Microsoft.Extensions.Options;
 using System;
@@ -15,10 +14,10 @@ namespace Infrastructure.Repositories.Dapper
     {
         protected readonly IDbConnection dbConnection;
 
-        protected abstract string InsertQuery { get; set; }
-        protected abstract string UpdateQuery { get; set; }
-        protected abstract string DeleteQuery { get; set; }
-        protected abstract string SelectQuery { get; set; }
+        protected abstract string InsertQuery { get; }
+        protected abstract string UpdateQuery { get; }
+        protected abstract string DeleteQuery { get; }
+        protected abstract string SelectQuery { get; }
 
         public RepositoryDapper(IOptions<DataOptionFactory> databaseConfiguration)
         {

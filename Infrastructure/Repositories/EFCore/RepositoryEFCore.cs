@@ -1,4 +1,5 @@
-﻿using Infrastructure.Interfaces.Repositories.EFCore;
+﻿using Infrastructure.DBConfiguration.EFCore;
+using Infrastructure.Interfaces.Repositories.EFCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories.EFCore
@@ -6,6 +7,6 @@ namespace Infrastructure.Repositories.EFCore
     public class RepositoryEFCore<TEntity> : RepositoryEFCoreMethodsAsync<TEntity>, 
                                              IRepositoryEFCore<TEntity> where TEntity : class
     {
-        public RepositoryEFCore(DbContext databaseContext) : base(databaseContext) {}
+        public RepositoryEFCore(ApplicationContext databaseContext) : base(databaseContext) {}
     }
 }

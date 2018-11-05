@@ -70,7 +70,7 @@ namespace Infrastructure.Repositories.Dapper
 
         public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
         {
-            await dbConnection.QueryAsync(UpdateQuery, entities);
+            await dbConnection.ExecuteAsync(UpdateQuery, entities);
         }
     }
 }

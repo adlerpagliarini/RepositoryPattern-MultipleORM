@@ -1,10 +1,7 @@
 ﻿using Domain.Entities;
 using Infrastructure.DBConfiguration.Dapper;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
 
 namespace Infrastructure.Repositories.Dapper
 {

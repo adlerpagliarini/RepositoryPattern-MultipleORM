@@ -6,26 +6,56 @@ using Domain.Entities;
 using Infrastructure.Interfaces.Repositories.EFCore;
 using Infrastructure.Interfaces.Repositories.Dapper;
 using Infrastructure.Interfaces.DBConfiguration.Dapper;
+using Infrastructure.Repositories.Dapper;
+using System.Collections.Generic;
 
 namespace WebApplication.Controllers
 {
     public class UsersController : Controller
     {
         private readonly IRepositoryEFCore<User> repositoryEFCoreUser;
-        private readonly IRepositoryDapper<User> repositoryDapperUser;
-        private readonly IRepositoryDapper<ToDoList> repositoryDapperTodoList;
+        private readonly RepositoryDapperUser repositoryDPUser;
 
-        public UsersController(IRepositoryEFCore<User> efCoreUser, IRepositoryDapper<User> dapperUser, IDataServiceFactory dapperFactory)
+        public UsersController(IRepositoryEFCore<User> efCoreUser, IDataServiceFactory dapperFactory, RepositoryDapperUser repositorydpuser)
         {
             repositoryEFCoreUser = efCoreUser;
-            repositoryDapperUser = dapperUser;
-            repositoryDapperTodoList = dapperFactory.CreateInstance<ToDoList>();
+            //repositoryDapperTodoList = dapperFactory.CreateInstance<ToDoList>();
+            repositoryDPUser = repositorydpuser;
         }
 
         // GET: Users
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(repositoryEFCoreUser.GetAllQueryable().Take(10));
+            //return View(repositoryEFCoreUser.GetAllQueryable().Take(10));
+            var x = new List<User>()
+            {
+                new User(){ Id = 1313857, Name = "AA"},
+                new User(){ Id = 1313858, Name = "BB"},
+                new User(){ Id = 1313859, Name = "CC"}
+            };
+
+            var y = new List<User>()
+            {
+                new User(){ Id = 1313853, Name = "AA"},
+                new User(){ Id = 1313852, Name = "BB"},
+                new User(){ Id = 1313851, Name = "CC"}
+            };
+
+            /*repositoryDPUser.AddRange(x);
+            await repositoryDPUser.AddRangeAsync(x);*/
+
+            /*repositoryDPUser.Update(x[0]);
+            await repositoryDPUser.UpdateAsync(x[1]);
+            await repositoryDPUser.UpdateRangeAsync(x);*/
+
+            repositoryDPUser.Remove(3);
+            repositoryDPUser.Remove(x[0]);
+            repositoryDPUser.RemoveRange(x);
+            await repositoryDPUser.RemoveAsync(1313851);
+            await repositoryDPUser.RemoveAsync(y[1]);
+            await repositoryDPUser.RemoveRangeAsync(y);
+
+            return View(repositoryDPUser.GetAll());
         }
 
         // GET: Users/Details/5
