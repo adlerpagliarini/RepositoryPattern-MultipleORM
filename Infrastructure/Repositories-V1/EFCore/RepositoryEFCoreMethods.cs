@@ -1,10 +1,10 @@
-﻿using Infrastructure.Interfaces.Repositories.EFCore;
+﻿using Infrastructure.Interfaces.Repositories_V1.EFCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Repositories.EFCore
+namespace Infrastructure.Repositories_V1.EFCore
 {
     public class RepositoryEFCoreMethods<TEntity> : RepositoryEFCoreBase<TEntity>,
                                                     IRepositoryEFCoreMethods<TEntity> where TEntity : class

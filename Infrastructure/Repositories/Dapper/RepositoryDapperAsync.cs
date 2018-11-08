@@ -1,48 +1,51 @@
 ﻿using Dapper;
+using Domain.Entities;
 using Infrastructure.DBConfiguration.Dapper;
-using Infrastructure.Interfaces.Repositories.Dapper;
+using Infrastructure.Interfaces.Repositories;
+using Infrastructure.Interfaces.Repositories.Domain;
 using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Threading.Tasks;
 using System.Linq;
-using Domain.Entities;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Dapper
 {
-    public abstract class RepositoryDapperAsync<TEntity> : RepositoryDapper<TEntity>, IRepositoryDapperAsync<TEntity>
-                            where TEntity : class, IIdentityEntity
+    public abstract class RepositoryDapperAsync<TEntity> : RepositoryDapper<TEntity>, IRepositoryBaseAsync<TEntity> where TEntity : class, IIdentityEntity
     {
-        public RepositoryDapperAsync(IOptions<DataOptionFactory> databaseConfiguration) : base(databaseConfiguration)
+        public RepositoryDapperAsync(IOptions<DataOptionFactory> databaseOptions) : base (databaseOptions)
+        {            
+        }
+
+        public RepositoryDapperAsync(IDbConnection databaseConnection) : base (databaseConnection)
         {
         }
 
-        public RepositoryDapperAsync(IDbConnection databaseConnection) : base(databaseConnection)
+        public virtual async Task<int> AddAsync(TEntity obj)
         {
+            TEntity entity = await dbConn.QuerySingleAsync<TEntity>(InsertQueryReturnId, obj);
+            return entity.Id;
         }
 
-        public async Task AddAsync(TEntity obj)
+        public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            await dbConnection.ExecuteAsync(InsertQuery, obj);
+            await dbConn.ExecuteAsync(InsertQuery, entities);
         }
 
-        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            await dbConnection.ExecuteAsync(InsertQuery, entities);
+            return await dbConn.QueryAsync<TEntity>(SelectAllQuery);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<TEntity> GetByIdAsync(object id)
         {
-            return await dbConnection.QueryAsync<TEntity>(SelectQuery);
-        }
-
-        public async Task<TEntity> GetByIdAsync(object id)
-        {
-            var entity = await dbConnection.QueryAsync<TEntity>(SelectQuery, new { Id = id });
+            var entity = await dbConn.QueryAsync<TEntity>(SelectByIdQuery, new { Id = id });
             return entity.FirstOrDefault();
         }
 
-        public async Task<bool> RemoveAsync(object id)
+        public virtual async Task<bool> RemoveAsync(object id)
         {
             var entity = await GetByIdAsync(id);
 
@@ -53,24 +56,29 @@ namespace Infrastructure.Repositories.Dapper
             return true;
         }
 
-        public async Task RemoveAsync(TEntity obj)
+        public virtual async Task RemoveAsync(TEntity obj)
         {
-            await dbConnection.ExecuteAsync(DeleteQuery, new { obj.Id });
+            await dbConn.ExecuteAsync(DeleteByIdQuery, new { obj.Id });
         }
 
-        public async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+        public virtual async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
         {
-            await dbConnection.ExecuteAsync(DeleteQuery, entities.Select(obj => new { obj.Id }));
+            await dbConn.ExecuteAsync(DeleteByIdQuery, entities.Select(obj => new { obj.Id }));
         }
 
-        public async Task UpdateAsync(TEntity obj)
+        public virtual async Task UpdateAsync(TEntity obj)
         {
-            await dbConnection.QueryAsync(UpdateQuery, obj);
+            await dbConn.QueryAsync(UpdateByIdQuery, obj);
         }
 
-        public async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
+        public virtual async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
         {
-            await dbConnection.ExecuteAsync(UpdateQuery, entities);
+            await dbConn.ExecuteAsync(UpdateByIdQuery, entities.Select(obj => obj));
+        }
+
+        public Task<int> CommitAsync()
+        {
+            return Task.FromResult(1);
         }
     }
 }

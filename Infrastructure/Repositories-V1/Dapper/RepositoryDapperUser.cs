@@ -3,7 +3,7 @@ using Infrastructure.DBConfiguration.Dapper;
 using Microsoft.Extensions.Options;
 using System.Data;
 
-namespace Infrastructure.Repositories.Dapper
+namespace Infrastructure.Repositories_V1.Dapper
 {
     public class RepositoryDapperUser : RepositoryDapperAsync<User>
     {

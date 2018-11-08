@@ -12,7 +12,7 @@ namespace Domain.Entities
 
         public DateTime TimeToEnd { get; set; }
 
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
+        /*public int UserId { get; set; }
+        public virtual User User { get; set; }*/
     }
 }

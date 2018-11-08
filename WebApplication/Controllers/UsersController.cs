@@ -3,59 +3,60 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
-using Infrastructure.Interfaces.Repositories.EFCore;
-using Infrastructure.Interfaces.Repositories.Dapper;
 using Infrastructure.Interfaces.DBConfiguration.Dapper;
 using Infrastructure.Repositories.Dapper;
 using System.Collections.Generic;
+using Infrastructure.Interfaces.Repositories.Domain;
+using Infrastructure.Repositories.EFCore;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Infrastructure.DBConfiguration.EFCore;
 
 namespace WebApplication.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly IRepositoryEFCore<User> repositoryEFCoreUser;
-        private readonly RepositoryDapperUser repositoryDPUser;
-
-        public UsersController(IRepositoryEFCore<User> efCoreUser, IDataServiceFactory dapperFactory, RepositoryDapperUser repositorydpuser)
+        private readonly IUserRepository repositoryDapperUser;
+        private RepositoryEntityFramework<User> repositoryEfUser;
+        public UsersController(IUserRepository dapperUser, ApplicationContext applicationContext)
         {
-            repositoryEFCoreUser = efCoreUser;
-            //repositoryDapperTodoList = dapperFactory.CreateInstance<ToDoList>();
-            repositoryDPUser = repositorydpuser;
+            repositoryDapperUser = dapperUser;
+            repositoryEfUser = new RepositoryEntityFramework<User>(applicationContext);
         }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            //return View(repositoryEFCoreUser.GetAllQueryable().Take(10));
             var x = new List<User>()
             {
-                new User(){ Id = 1313857, Name = "AA"},
-                new User(){ Id = 1313858, Name = "BB"},
-                new User(){ Id = 1313859, Name = "CC"}
+                new User(){ Id = 1313905, Name = "A"},
+                new User(){ Id = 1313904, Name = "B"},
+                new User(){ Id = 1313903, Name = "C"}
             };
 
-            var y = new List<User>()
-            {
-                new User(){ Id = 1313853, Name = "AA"},
-                new User(){ Id = 1313852, Name = "BB"},
-                new User(){ Id = 1313851, Name = "CC"}
-            };
+            var z = repositoryEfUser.GetAll();
 
-            /*repositoryDPUser.AddRange(x);
-            await repositoryDPUser.AddRangeAsync(x);*/
+            repositoryEfUser.Update(x[0]);
+            repositoryEfUser.UpdateRange(x);
+            /*
+            repositoryDapperUser.AddRange(x);
+            await repositoryDapperUser.AddRangeAsync(x);
 
-            /*repositoryDPUser.Update(x[0]);
-            await repositoryDPUser.UpdateAsync(x[1]);
-            await repositoryDPUser.UpdateRangeAsync(x);*/
+            repositoryDapperUser.Update(x[0]);
+            await repositoryDapperUser.UpdateAsync(x[1]);
+            await repositoryDapperUser.UpdateRangeAsync(x);
 
-            repositoryDPUser.Remove(3);
-            repositoryDPUser.Remove(x[0]);
-            repositoryDPUser.RemoveRange(x);
-            await repositoryDPUser.RemoveAsync(1313851);
-            await repositoryDPUser.RemoveAsync(y[1]);
-            await repositoryDPUser.RemoveRangeAsync(y);
+            repositoryDapperUser.Remove(3);
+            repositoryDapperUser.Remove(x[0]);
+            repositoryDapperUser.RemoveRange(x);
+            await repositoryDapperUser.RemoveAsync(1313851);
+            await repositoryDapperUser.RemoveAsync(y[1]);
+            await repositoryDapperUser.RemoveRangeAsync(y);*/
 
-            return View(repositoryDPUser.GetAll());
+            var xx = repositoryDapperUser.GetAll();
+            var xy = await repositoryDapperUser.GetAllAsync();
+
+            return View(z.Take(5));
         }
 
         // GET: Users/Details/5
@@ -66,7 +67,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var user = await repositoryEFCoreUser.GetByIdAsync(id);
+            var user = await repositoryDapperUser.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -90,8 +91,7 @@ namespace WebApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                await repositoryEFCoreUser.AddAsync(user);
-                await repositoryEFCoreUser.CommitAsync();
+                await repositoryDapperUser.AddAsync(user);
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
@@ -105,7 +105,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var user = await repositoryEFCoreUser.GetByIdAsync(id);
+            var user = await repositoryDapperUser.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -129,8 +129,7 @@ namespace WebApplication.Controllers
             {
                 try
                 {
-                    repositoryEFCoreUser.Update(user);
-                    await repositoryEFCoreUser.CommitAsync();
+                    await repositoryDapperUser.UpdateAsync(user);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -156,7 +155,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var user = await repositoryEFCoreUser.GetByIdAsync(id);
+            var user = await repositoryDapperUser.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -170,14 +169,13 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            repositoryEFCoreUser.Remove(id);
-            await repositoryEFCoreUser.CommitAsync();
+            await repositoryDapperUser.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(int id)
         {
-            return repositoryEFCoreUser.GetByIdAsync(id) != null ? true : false;
+            return repositoryDapperUser.GetByIdAsync(id) != null ? true : false;
         }
     }
 }

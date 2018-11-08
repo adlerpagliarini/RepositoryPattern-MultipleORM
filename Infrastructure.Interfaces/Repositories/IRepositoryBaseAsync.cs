@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,20 +7,21 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Interfaces.Repositories
 {
-    public interface IRepositoryAsyncBase<TEntity> where TEntity : class
+    public interface IRepositoryBaseAsync<TEntity> : IDisposable where TEntity : class, IIdentityEntity
     {
-        Task<bool> AddAsync(TEntity obj);
-        Task<bool> AddRangeAsync(IEnumerable<TEntity> entities);
+        Task<int> AddAsync(TEntity obj);
+        Task AddRangeAsync(IEnumerable<TEntity> entities);
 
         Task<TEntity> GetByIdAsync(object id);
-        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, 
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
-            string includeProperties = "");
+        Task<IEnumerable<TEntity>> GetAllAsync();
 
-        Task<bool> UpdateAsync(TEntity obj);
+        Task UpdateAsync(TEntity obj);
+        Task UpdateRangeAsync(IEnumerable<TEntity> entities);
 
         Task<bool> RemoveAsync(object id);
-        Task<bool> RemoveAsync(TEntity obj);
-        Task<bool> RemoveRangeAsync(IEnumerable<TEntity> entities);
+        Task RemoveAsync(TEntity obj);
+        Task RemoveRangeAsync(IEnumerable<TEntity> entities);
+
+        Task<int> CommitAsync();
     }
 }

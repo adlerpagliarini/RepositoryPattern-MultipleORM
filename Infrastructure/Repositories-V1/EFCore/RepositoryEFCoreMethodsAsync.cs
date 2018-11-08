@@ -1,4 +1,5 @@
-﻿using Infrastructure.Interfaces.Repositories.EFCore;
+﻿using Domain.Entities;
+using Infrastructure.Interfaces.Repositories_V1.Dapper;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,10 +7,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Repositories.EFCore
+namespace Infrastructure.Repositories_V1.EFCore
 {
     public class RepositoryEFCoreMethodsAsync<TEntity> : RepositoryEFCoreMethods<TEntity>,
-                                                         IRepositoryDapperAsync<TEntity> where TEntity : class
+                                                         IRepositoryDapperAsync<TEntity> where TEntity : class, IIdentityEntity
     {
         public RepositoryEFCoreMethodsAsync(DbContext databaseContext) : base(databaseContext) { }
 
@@ -41,6 +42,36 @@ namespace Infrastructure.Repositories.EFCore
         public async Task<int> CommitAsync()
         {
             return await base._databaseContext.SaveChangesAsync();
+        }
+
+        public Task UpdateAsync(TEntity obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateRangeAsync(IEnumerable<TEntity> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> RemoveAsync(object Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsync(TEntity obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Interfaces.Repositories.Dapper
+namespace Infrastructure.Interfaces.Repositories_V1.Dapper
 {
     public interface IRepositoryDapperAsync<TEntity> where TEntity : class, IIdentityEntity
     {

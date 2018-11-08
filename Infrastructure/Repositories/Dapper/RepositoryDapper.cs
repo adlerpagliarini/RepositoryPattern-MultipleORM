@@ -1,91 +1,103 @@
 ﻿using Dapper;
 using Domain.Entities;
 using Infrastructure.DBConfiguration.Dapper;
-using Infrastructure.Interfaces.Repositories.Dapper;
+using Infrastructure.Interfaces.Repositories;
+using Infrastructure.Interfaces.Repositories.Domain;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Dapper
 {
-    public abstract class RepositoryDapper<TEntity> : IRepositoryDapper<TEntity> where TEntity : class, IIdentityEntity
+    public abstract class RepositoryDapper<TEntity> : IRepositoryBase<TEntity> where TEntity : class, IIdentityEntity
     {
-        protected readonly IDbConnection dbConnection;
+        protected readonly IDbConnection dbConn;
 
         protected abstract string InsertQuery { get; }
-        protected abstract string UpdateQuery { get; }
-        protected abstract string DeleteQuery { get; }
-        protected abstract string SelectQuery { get; }
+        protected abstract string InsertQueryReturnId { get; }
+        protected abstract string UpdateByIdQuery { get; }
+        protected abstract string DeleteByIdQuery { get; }
+        protected abstract string SelectByIdQuery { get; }
+        protected abstract string SelectAllQuery { get; }
 
-        public RepositoryDapper(IOptions<DataOptionFactory> databaseConfiguration)
+        public RepositoryDapper(IOptions<DataOptionFactory> databaseOptions)
         {
-            dbConnection = databaseConfiguration.Value.DatabaseConnection;
-            dbConnection.Open();
+            dbConn = databaseOptions.Value.DatabaseConnection;
+            dbConn.Open();
         }
 
         public RepositoryDapper(IDbConnection databaseConnection)
         {
-            dbConnection = databaseConnection;
-            dbConnection.Open();
-        }
-
-        public void Add(TEntity obj)
-        {
-            dbConnection.Execute(InsertQuery, obj);
-        }
-
-        public void AddRange(IEnumerable<TEntity> entities)
-        {
-            dbConnection.Execute(InsertQuery, entities);
-        }
-
-        public int Commit()
-        {
-            throw new NotImplementedException();
+            dbConn = databaseConnection;
+            dbConn.Open();
         }
 
         public void Dispose()
         {
-            dbConnection.Close();
-            dbConnection.Dispose();
+            dbConn.Close();
+            dbConn.Dispose();
+            GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public virtual int Add(TEntity obj)
         {
-            return dbConnection.Query<TEntity>(SelectQuery);
+            TEntity entity = dbConn.QuerySingle<TEntity>(InsertQueryReturnId, obj);
+            return entity.Id;
         }
 
-        public TEntity GetById(object id)
+        public virtual void AddRange(IEnumerable<TEntity> entities)
         {
-            return dbConnection.Query<TEntity>(SelectQuery, new { Id = id }).FirstOrDefault();
+            dbConn.Execute(InsertQuery, entities); 
         }
 
-        public bool Remove(object id)
+        public virtual IEnumerable<TEntity> GetAll()
         {
-            var entity = this.GetById(id);
+            return dbConn.Query<TEntity>(SelectAllQuery);
+        }
+
+        public virtual TEntity GetById(object id)
+        {
+            return dbConn.Query<TEntity>(SelectByIdQuery, new { Id = id }).FirstOrDefault();
+        }
+
+        public virtual bool Remove(object id)
+        {
+            var entity = GetById(id);
 
             if (entity == null)
                 return false;
 
-            dbConnection.Execute(DeleteQuery, new { entity.Id });
+            Remove(entity);
             return true;
         }
 
-        public void Remove(TEntity obj)
+        public virtual void Remove(TEntity obj)
         {
-            dbConnection.Execute(DeleteQuery, new { obj.Id });
+            dbConn.Execute(DeleteByIdQuery, new { obj.Id });
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
+        public virtual void RemoveRange(IEnumerable<TEntity> entities)
         {
-            dbConnection.Execute(DeleteQuery, entities.Select(obj => new { obj.Id }));
+            dbConn.Execute(DeleteByIdQuery, entities.Select(obj => new { obj.Id }));
         }
 
-        public void Update(TEntity obj)
+        public virtual void Update(TEntity obj)
         {
-            dbConnection.Query(UpdateQuery, obj);
+            dbConn.Query(UpdateByIdQuery, obj);
+        }
+
+        public virtual void UpdateRange(IEnumerable<TEntity> entities)
+        {
+            dbConn.Execute(UpdateByIdQuery, entities.Select(obj => new { obj.Id }));
+        }
+
+        public int Commit()
+        {
+            return 1;
         }
     }
 }

@@ -14,5 +14,10 @@ namespace Domain.Entities
         {
             this.ToDoList = new HashSet<ToDoList>();
         }
+
+        public void AddItemToDo(ToDoList todo)
+        {
+            ToDoList.Add(todo);
+        }
     }
 }

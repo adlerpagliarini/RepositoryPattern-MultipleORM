@@ -1,11 +1,11 @@
-﻿using Infrastructure.Interfaces.Repositories;
+﻿using Infrastructure.Interfaces.Repositories_V1;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Repositories.EFCore
+namespace Infrastructure.Repositories_V1.EFCore
 {
     public class RepositoryEFCoreBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
     {
@@ -21,6 +21,7 @@ namespace Infrastructure.Repositories.EFCore
         public void Add(TEntity obj)
         {
             _dbSet.Add(obj);
+            var x = _dbSet.Remove(obj);
         }
 
         public void AddRange(IEnumerable<TEntity> entities)
@@ -30,7 +31,7 @@ namespace Infrastructure.Repositories.EFCore
 
         public void Update(TEntity obj)
         {
-            _databaseContext.Entry(obj).State = EntityState.Modified;
+          _databaseContext.Entry(obj).State = EntityState.Modified;
         }
 
         public bool Remove(object id)

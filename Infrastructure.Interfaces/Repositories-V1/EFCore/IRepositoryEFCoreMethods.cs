@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Infrastructure.Interfaces.Repositories.EFCore
+namespace Infrastructure.Interfaces.Repositories_V1.EFCore
 {
     public interface IRepositoryEFCoreMethods<TEntity> where TEntity : class
     {

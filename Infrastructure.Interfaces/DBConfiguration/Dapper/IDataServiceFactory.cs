@@ -1,11 +1,12 @@
 ﻿using Domain.Entities;
-using Infrastructure.Interfaces.Repositories.Dapper;
+using Infrastructure.Interfaces.Repositories;
 
 namespace Infrastructure.Interfaces.DBConfiguration.Dapper
 {
     public interface IDataServiceFactory
     {
         string ConnectionString { get; }
-        IRepositoryDapperAsync<TEntity> CreateInstance<TEntity>() where TEntity : class, IIdentityEntity;
+        IRepositoryBase<TEntity> CreateInstance<TEntity>() where TEntity : class, IIdentityEntity;
+        IRepositoryBaseAsync<TEntity> CreateInstanceAsync<TEntity>() where TEntity : class, IIdentityEntity;
     }
 }

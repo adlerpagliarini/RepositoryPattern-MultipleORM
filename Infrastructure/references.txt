@@ -8,3 +8,8 @@ Understand ways to returning Data from database
 https://blog.usejournal.com/enumeration-in-net-d5674921512e
 https://medium.com/@kunaltandon.kt/ienumerable-vs-icollection-vs-ilist-vs-iqueryable-in-c-2101351453db
 https://stackoverflow.com/questions/41200049/generic-repository-with-dapper
+
+https://stackoverflow.com/questions/41884734/how-do-i-return-one-to-many-records-in-a-specific-order-with-dapper-and-multi-ma
+https://dapper-tutorial.net/result-multi-mapping#example---query-multi-mapping-one-to-many
+
+https://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b

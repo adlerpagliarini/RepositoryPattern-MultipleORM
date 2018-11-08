@@ -1,25 +1,22 @@
-﻿using Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Infrastructure.Interfaces.Repositories
+namespace Infrastructure.Interfaces.Repositories_V1
 {
-    public interface IRepositoryBase<TEntity> : IDisposable where TEntity : class, IIdentityEntity
+    public interface IRepositoryBase<TEntity> : IDisposable where TEntity : class
     {
-        int Add(TEntity obj);
+        void Add(TEntity obj);
         void AddRange(IEnumerable<TEntity> entities);
 
         TEntity GetById(object id);
         IEnumerable<TEntity> GetAll();
 
         void Update(TEntity obj);
-        void UpdateRange(IEnumerable<TEntity> entities);
 
         bool Remove(object id);
         void Remove(TEntity obj);
         void RemoveRange(IEnumerable<TEntity> entities);
 
         int Commit();
-
     }
 }
