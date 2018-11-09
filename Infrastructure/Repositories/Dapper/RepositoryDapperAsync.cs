@@ -76,9 +76,9 @@ namespace Infrastructure.Repositories.Dapper
             await dbConn.ExecuteAsync(UpdateByIdQuery, entities.Select(obj => obj));
         }
 
-        public Task<int> CommitAsync()
+        /*public Task<int> CommitAsync()
         {
             return Task.FromResult(1);
-        }
+        }*/
     }
 }

@@ -17,11 +17,11 @@ namespace WebApplication.Controllers
     public class UsersController : Controller
     {
         private readonly IUserRepository repositoryDapperUser;
-        private RepositoryEntityFramework<User> repositoryEfUser;
+        private EntityFrameworkUser repositoryEntityFrameworkUser;
         public UsersController(IUserRepository dapperUser, ApplicationContext applicationContext)
         {
             repositoryDapperUser = dapperUser;
-            repositoryEfUser = new RepositoryEntityFramework<User>(applicationContext);
+            repositoryEntityFrameworkUser = new EntityFrameworkUser(applicationContext);
         }
 
         // GET: Users
@@ -29,15 +29,17 @@ namespace WebApplication.Controllers
         {
             var x = new List<User>()
             {
-                new User(){ Id = 1313905, Name = "A"},
-                new User(){ Id = 1313904, Name = "B"},
-                new User(){ Id = 1313903, Name = "C"}
+                new User(){ Id = 1313905, Name = "AAA"},
+                new User(){ Id = 1313904, Name = "BB"},
+                new User(){ Id = 1313903, Name = "CCC"}
             };
 
-            var z = repositoryEfUser.GetAll();
+            var z = repositoryEntityFrameworkUser.GetAll().Take(10);
 
-            repositoryEfUser.Update(x[0]);
-            repositoryEfUser.UpdateRange(x);
+            repositoryEntityFrameworkUser.Update(x[0]);
+            repositoryEntityFrameworkUser.UpdateRange(x);
+            await repositoryEntityFrameworkUser.CommitAsync();
+            //repositoryEntityFrameworkUser.Dispose();
             /*
             repositoryDapperUser.AddRange(x);
             await repositoryDapperUser.AddRangeAsync(x);

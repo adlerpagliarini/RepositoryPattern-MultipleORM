@@ -94,10 +94,5 @@ namespace Infrastructure.Repositories.Dapper
         {
             dbConn.Execute(UpdateByIdQuery, entities.Select(obj => new { obj.Id }));
         }
-
-        public int Commit()
-        {
-            return 1;
-        }
     }
 }

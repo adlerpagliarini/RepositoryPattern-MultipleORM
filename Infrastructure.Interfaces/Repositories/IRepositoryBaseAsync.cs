@@ -21,7 +21,5 @@ namespace Infrastructure.Interfaces.Repositories
         Task<bool> RemoveAsync(object id);
         Task RemoveAsync(TEntity obj);
         Task RemoveRangeAsync(IEnumerable<TEntity> entities);
-
-        Task<int> CommitAsync();
     }
 }

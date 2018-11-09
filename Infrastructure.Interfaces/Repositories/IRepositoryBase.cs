@@ -18,8 +18,5 @@ namespace Infrastructure.Interfaces.Repositories
         bool Remove(object id);
         void Remove(TEntity obj);
         void RemoveRange(IEnumerable<TEntity> entities);
-
-        int Commit();
-
     }
 }

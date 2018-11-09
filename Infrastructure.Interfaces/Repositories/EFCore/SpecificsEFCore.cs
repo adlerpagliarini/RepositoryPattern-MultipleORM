@@ -12,12 +12,12 @@ namespace Infrastructure.Interfaces.Repositories.EFCore
         #region ProtectedMethods
         protected abstract IQueryable<TEntity> GenerateQuery(Expression<Func<TEntity, bool>> filter = null,
                                                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-                                                string includeProperties = "");
+                                                params string[] includeProperties);
 
         protected abstract IQueryable<TEntity> GenerateQueryableWhereExpression(IQueryable<TEntity> query,
                                                 Expression<Func<TEntity, bool>> filter);
 
-        protected abstract IQueryable<TEntity> GenerateIncludeProperties(IQueryable<TEntity> query, string includeProperties);
+        protected abstract IQueryable<TEntity> GenerateIncludeProperties(IQueryable<TEntity> query, params string[] includeProperties);
 
         protected abstract IEnumerable<TEntity> GetYieldManipulated(IEnumerable<TEntity> entities, Func<TEntity, TEntity> DoAction);
         #endregion ProtectedMethods

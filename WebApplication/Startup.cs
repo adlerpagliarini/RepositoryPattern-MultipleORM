@@ -41,6 +41,8 @@ namespace WebApplication
 
             services.AddScoped<IUserRepository, DapperUser>();
 
+            //services.AddScoped<IUserRepository, DapperUser>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

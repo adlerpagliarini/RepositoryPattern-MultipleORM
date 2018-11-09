@@ -9,7 +9,9 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories.EFCore
 {
-    public class RepositoryEntityFramework<TEntity> : SpecificsEFCore<TEntity>, IRepositoryBase<TEntity> where TEntity : class, IIdentityEntity
+    public class RepositoryEntityFramework<TEntity> : SpecificsEFCore<TEntity>, 
+                                                      IRepositoryEFCore, 
+                                                      IRepositoryBase<TEntity> where TEntity : class, IIdentityEntity
     {
         protected readonly DbContext dbContext;
         protected readonly DbSet<TEntity> dbSet;
@@ -36,7 +38,7 @@ namespace Infrastructure.Repositories.EFCore
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return GetYieldManipulated(dbSet, DoAction);
         }
@@ -91,7 +93,7 @@ namespace Infrastructure.Repositories.EFCore
         #region ProtectedMethods
         protected override IQueryable<TEntity> GenerateQuery(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+            params string[] includeProperties)
         {
             IQueryable<TEntity> query = dbSet;
             query = GenerateQueryableWhereExpression(query, filter);
@@ -111,9 +113,9 @@ namespace Infrastructure.Repositories.EFCore
             return query;
         }
 
-        protected override IQueryable<TEntity> GenerateIncludeProperties(IQueryable<TEntity> query, string includeProperties)
+        protected override IQueryable<TEntity> GenerateIncludeProperties(IQueryable<TEntity> query, params string[] includeProperties)
         {
-            foreach (string includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (string includeProperty in includeProperties)
                 query = query.Include(includeProperty);
 
             return query;

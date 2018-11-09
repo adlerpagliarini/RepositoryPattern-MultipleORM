@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastructure.Interfaces.Repositories;
+using Infrastructure.Interfaces.Repositories.EFCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.EFCore
 {
-    public class RepositoryEntityFrameworkAsync<TEntity> : RepositoryEntityFramework<TEntity>, IRepositoryBaseAsync<TEntity> where TEntity : class, IIdentityEntity
+    public class RepositoryEntityFrameworkAsync<TEntity> : RepositoryEntityFramework<TEntity>, 
+                                                           IRepositoryEFCoreAsync, 
+                                                           IRepositoryBaseAsync<TEntity> where TEntity : class, IIdentityEntity
     {
 
         public RepositoryEntityFrameworkAsync(DbContext dbContext) : base(dbContext)
@@ -26,9 +29,9 @@ namespace Infrastructure.Repositories.EFCore
             await dbSet.AddRangeAsync(entities);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await dbSet.ToListAsync();
+            return await Task.FromResult(dbSet);
         }
 
         public async Task<TEntity> GetByIdAsync(object id)
