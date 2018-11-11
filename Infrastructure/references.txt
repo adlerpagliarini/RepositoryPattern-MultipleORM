@@ -3,13 +3,29 @@ https://stackoverflow.com/questions/46021991/dependency-injection-for-generic-cl
 
 Using IOptions
 https://stackoverflow.com/questions/37597300/net-core-dapper-connection-string
+IOptions on unit test
+https://stackoverflow.com/questions/40876507/net-core-unit-testing-mock-ioptionst
 
 Understand ways to returning Data from database
 https://blog.usejournal.com/enumeration-in-net-d5674921512e
 https://medium.com/@kunaltandon.kt/ienumerable-vs-icollection-vs-ilist-vs-iqueryable-in-c-2101351453db
 https://stackoverflow.com/questions/41200049/generic-repository-with-dapper
 
+Dapper Relation
 https://stackoverflow.com/questions/41884734/how-do-i-return-one-to-many-records-in-a-specific-order-with-dapper-and-multi-ma
 https://dapper-tutorial.net/result-multi-mapping#example---query-multi-mapping-one-to-many
 
+Dapper Examples
+https://www.treinaweb.com.br/blog/utilizando-o-micro-orm-dapper-em-uma-aplicacao-asp-net-core/
+https://dotnetcorecentral.com/blog/asp-net-core-web-api-application-with-dapper-part-2/
+https://www.infoq.com/articles/repository-implementation-strategies
+http://www.bradoncode.com/blog/2012/12/creating-data-repository-using-dapper.html
+https://imasters.com.br/banco-de-dados/c-crud-no-sql-server-com-dapper-e-metroframework-usando-um-webservice-parte-01
+https://www.fabiosilvalima.net/design-patterns-repository-dapper-sql-mongodb/
+
+Dapper & Swagger
+http://www.talkingdotnet.com/use-dapper-orm-with-asp-net-core/
+http://www.talkingdotnet.com/add-swagger-to-asp-net-core-web-api/
+
+Linqs Methods
 https://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b

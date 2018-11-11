@@ -4,7 +4,7 @@ namespace Domain.Entities
 {
     public class ToDoList : IIdentityEntity
     {
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
         public string Title { get; set; }
 
@@ -12,7 +12,7 @@ namespace Domain.Entities
 
         public DateTime TimeToEnd { get; set; }
 
-        /*public int UserId { get; set; }
-        public virtual User User { get; set; }*/
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
     }
 }

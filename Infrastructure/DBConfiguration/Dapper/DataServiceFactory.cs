@@ -1,10 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastructure.Interfaces.DBConfiguration.Dapper;
-using Infrastructure.Interfaces.Repositories;
-using Infrastructure.Interfaces.Repositories.Domain;
-using Infrastructure.Repositories.Dapper;
-using System;
-using System.Data.SqlClient;
+using Infrastructure.Interfaces.Repositories.Standard;
 
 namespace Infrastructure.DBConfiguration.Dapper
 {

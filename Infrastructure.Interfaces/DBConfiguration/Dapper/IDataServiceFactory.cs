@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Infrastructure.Interfaces.Repositories;
+using Infrastructure.Interfaces.Repositories.Standard;
 
 namespace Infrastructure.Interfaces.DBConfiguration.Dapper
 {

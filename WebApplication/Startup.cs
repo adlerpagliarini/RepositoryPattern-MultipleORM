@@ -1,8 +1,13 @@
-﻿using Infrastructure.DBConfiguration.Dapper;
+﻿using Application.Services;
+using Application.Services.Standard;
+using Domain.Interfaces.Services;
+using Domain.Interfaces.Services.Standard;
+using Infrastructure.DBConfiguration.Dapper;
 using Infrastructure.DBConfiguration.EFCore;
 using Infrastructure.Interfaces.DBConfiguration.Dapper;
-using Infrastructure.Interfaces.Repositories.Domain;
+using Infrastructure.Interfaces.Repositories;
 using Infrastructure.Repositories.Dapper;
+using Infrastructure.Repositories.EFCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,9 +32,7 @@ namespace WebApplication
         {
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddScoped(typeof(IRepositoryEFCore<>), typeof(RepositoryEFCore<>));
             /* Using IOptions on constructor to create a instance of SqlConnection */
-            //services.AddScoped(typeof(IRepositoryDapper<>), typeof(RepositoryDapper<>));
             var databaseSettingsSection = Configuration.GetSection("ConnectionStrings");
             services.Configure<DataOptionFactory>(databaseSettingsSection);
 
@@ -37,9 +40,14 @@ namespace WebApplication
              * with IDBConnection on constructor to return a instance of SqlConnection */
             services.AddScoped<IDataServiceFactory, DataServiceFactory>(_ => new DataServiceFactory(Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddScoped(typeof(IRepositoryDapperAsync<>), typeof(RepositoryDapperAsync<>));
-
+            services.AddScoped<IUserRepository, EntityFrameworkUser>();
             services.AddScoped<IUserRepository, DapperUser>();
+
+            services.AddScoped(typeof(IServiceBase<>), typeof(ServiceBase<>));
+            services.AddScoped<IUserService, UserService>();
+            
+            
+            
 
             //services.AddScoped<IUserRepository, DapperUser>();
 
