@@ -29,3 +29,7 @@ http://www.talkingdotnet.com/add-swagger-to-asp-net-core-web-api/
 
 Linqs Methods
 https://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b
+
+IOC Configuration
+https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.1
+https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/configuration/options?view=aspnetcore-2.1

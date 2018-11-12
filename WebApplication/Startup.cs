@@ -6,6 +6,7 @@ using Infrastructure.DBConfiguration.Dapper;
 using Infrastructure.DBConfiguration.EFCore;
 using Infrastructure.Interfaces.DBConfiguration.Dapper;
 using Infrastructure.Interfaces.Repositories;
+using Infrastructure.IoC;
 using Infrastructure.Repositories.Dapper;
 using Infrastructure.Repositories.EFCore;
 using Microsoft.AspNetCore.Builder;
@@ -30,26 +31,10 @@ namespace WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            /* Using IOptions on constructor to create a instance of SqlConnection */
-            var databaseSettingsSection = Configuration.GetSection("ConnectionStrings");
-            services.Configure<DataOptionFactory>(databaseSettingsSection);
-
-            /* Using a Factory on constructor to create a instance of RepostioryDapper
-             * with IDBConnection on constructor to return a instance of SqlConnection */
-            services.AddScoped<IDataServiceFactory, DataServiceFactory>(_ => new DataServiceFactory(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddScoped<IUserRepository, EntityFrameworkUser>();
-            services.AddScoped<IUserRepository, DapperUser>();
+            services.InfrastructureFullDI(Configuration);
 
             services.AddScoped(typeof(IServiceBase<>), typeof(ServiceBase<>));
-            services.AddScoped<IUserService, UserService>();
-            
-            
-            
-
-            //services.AddScoped<IUserRepository, DapperUser>();
+            services.AddScoped<IUserService, UserService>();            
 
             services.Configure<CookiePolicyOptions>(options =>
             {

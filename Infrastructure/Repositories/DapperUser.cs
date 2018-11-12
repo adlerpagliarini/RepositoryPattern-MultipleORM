@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Linq;
 using Infrastructure.Repositories.Standard.Dapper;
+using Infrastructure.Interfaces.Repositories.Standard;
 
 namespace Infrastructure.Repositories.Dapper
 {
-    public class DapperUser : RepositoryDapperAsync<User>, IUserRepository
+    public class DapperUser : RepositoryDapperAsync<User>, IUserRepository, IRepositoryBaseAsync<User>
     {
         protected override string InsertQuery => "INSERT INTO Users VALUES (@Name)";
         protected override string InsertQueryReturnId => "INSERT INTO Users OUTPUT INSERTED.* VALUES (@Name)";
