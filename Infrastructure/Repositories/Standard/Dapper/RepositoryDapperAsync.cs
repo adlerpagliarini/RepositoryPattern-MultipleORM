@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Standard.Dapper
 {
-    public abstract class RepositoryDapperAsync<TEntity> : RepositoryDapper<TEntity>, IRepositoryBaseAsync<TEntity> where TEntity : class, IIdentityEntity
+    public abstract class RepositoryDapperAsync<TEntity> : RepositoryDapper<TEntity>, 
+                                                           IRepositoryBaseAsync<TEntity> where TEntity : class, IIdentityEntity
     {
         protected RepositoryDapperAsync(IOptions<DataOptionFactory> databaseOptions) : base (databaseOptions)
         {            

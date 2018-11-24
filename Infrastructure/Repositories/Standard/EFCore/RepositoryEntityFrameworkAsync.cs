@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories.Standard.EFCore
 {
-    public class RepositoryEntityFrameworkAsync<TEntity> : RepositoryEntityFramework<TEntity>, 
-                                                           IRepositoryEFCoreAsync, 
+    public class RepositoryEntityFrameworkAsync<TEntity> : RepositoryEntityFramework<TEntity>,  
                                                            IRepositoryBaseAsync<TEntity> where TEntity : class, IIdentityEntity
     {
 
@@ -72,7 +71,7 @@ namespace Infrastructure.Repositories.Standard.EFCore
             return await CommitAsync();
         }
 
-        public async Task<int> CommitAsync()
+        private async Task<int> CommitAsync()
         {
             return await dbContext.SaveChangesAsync();
         }

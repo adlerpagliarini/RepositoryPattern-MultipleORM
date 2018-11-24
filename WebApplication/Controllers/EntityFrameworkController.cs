@@ -6,21 +6,20 @@ using Domain.Entities;
 using Application.Interfaces.Services.Domain;
 using Infrastructure.Interfaces.Repositories.Domain;
 using Infrastructure.Interfaces.Repositories.Dapper;
-using Infrastructure.Repositories.Domain;
 
 namespace WebApplication.Controllers
 {
-    public class DapperController : Controller
+    public class EntityFrameworkController : Controller
     {
-        // If using just InfrastructureDapper
-        private readonly IUserService<IUserDapperRepository> userServiceSingleORM;
+        // If using just InfrastructureEntityFramework
+        private readonly IUserService<IUserEntityFrameworkRepository> userServiceSingleORM;
 
         // If using both InfrastructureDapper and InfrastructureEntityFramework
-        private readonly IUserDapperService userService;
+        private readonly IUserEntityFrameworkService userService;
 
-        public DapperController(IUserDapperService userDapperService, IUserService<IUserDapperRepository> singleORM)
+        public EntityFrameworkController(IUserEntityFrameworkService userEFService, IUserService<IUserEntityFrameworkRepository> singleORM)
         {
-            this.userService = userDapperService;
+            this.userService = userEFService;
             this.userServiceSingleORM = singleORM;
         }
 

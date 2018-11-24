@@ -1,10 +1,9 @@
 ﻿using Domain.Entities;
 using Infrastructure.DBConfiguration.Dapper;
-using Infrastructure.Interfaces.Repositories;
-using Infrastructure.Repositories.Dapper;
+using Infrastructure.Interfaces.Repositories.Domain;
+using Infrastructure.Repositories.Domain;
 using Microsoft.Extensions.Options;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace UnitTest.Integration.Repositories.Repositories.Dapper

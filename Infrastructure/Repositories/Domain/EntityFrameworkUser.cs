@@ -1,14 +1,17 @@
 ﻿using Domain.Entities;
 using Infrastructure.DBConfiguration.EFCore;
-using Infrastructure.Interfaces.Repositories;
+using Infrastructure.Interfaces.Repositories.Domain;
+using Infrastructure.Interfaces.Repositories.EFCore;
 using Infrastructure.Repositories.Standard.EFCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Repositories.EFCore
+namespace Infrastructure.Repositories.Domain
 {
-    public class EntityFrameworkUser : RepositoryEntityFrameworkAsync<User>, IUserRepository
+    public class EntityFrameworkUser : RepositoryEntityFrameworkAsync<User>,
+                                       IUserEntityFrameworkRepository, 
+                                       IUserRepository
     {
         public EntityFrameworkUser(ApplicationContext dbContext) : base(dbContext)
         {

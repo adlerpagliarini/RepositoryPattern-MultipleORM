@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Domain.Interfaces.Services.Standard
+namespace Application.Interfaces.Services.Standard
 {
     public interface IServiceBase<TEntity> where TEntity : class
     {
@@ -17,5 +17,6 @@ namespace Domain.Interfaces.Services.Standard
         Task<bool> RemoveAsync(object id);
         Task RemoveAsync(TEntity obj);
         Task RemoveRangeAsync(IEnumerable<TEntity> entities);
+
     }
 }

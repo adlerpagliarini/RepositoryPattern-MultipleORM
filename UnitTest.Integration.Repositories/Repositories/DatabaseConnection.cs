@@ -1,10 +1,7 @@
 ﻿using Infrastructure.DBConfiguration.Dapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace UnitTest.Integration.Repositories.Repositories
 {

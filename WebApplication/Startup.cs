@@ -1,19 +1,9 @@
-﻿using Application.Services;
-using Application.Services.Standard;
-using Domain.Interfaces.Services;
-using Domain.Interfaces.Services.Standard;
-using Infrastructure.DBConfiguration.Dapper;
-using Infrastructure.DBConfiguration.EFCore;
-using Infrastructure.Interfaces.DBConfiguration.Dapper;
-using Infrastructure.Interfaces.Repositories;
+﻿using Application.IoC;
 using Infrastructure.IoC;
-using Infrastructure.Repositories.Dapper;
-using Infrastructure.Repositories.EFCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,11 +21,11 @@ namespace WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.InfrastructureFullDI(Configuration);
-
-            services.AddScoped(typeof(IServiceBase<>), typeof(ServiceBase<>));
-            services.AddScoped<IUserService, UserService>();            
-
+            services.InfrastructureDapper(Configuration);
+            services.InfrastructureEntityFramework();
+            services.InfrastructureORMs();
+            services.ApplicationServicesIoC();
+       
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

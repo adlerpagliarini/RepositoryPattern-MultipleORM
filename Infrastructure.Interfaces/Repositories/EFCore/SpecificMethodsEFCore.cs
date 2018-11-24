@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Interfaces.Repositories.EFCore
 {
-    public abstract class SpecificsEFCore<TEntity> where TEntity : class, IIdentityEntity
+    public abstract class SpecificMethodsEFCore<TEntity> where TEntity : class, IIdentityEntity
     {
         #region ProtectedMethods
         protected abstract IQueryable<TEntity> GenerateQuery(Expression<Func<TEntity, bool>> filter = null,

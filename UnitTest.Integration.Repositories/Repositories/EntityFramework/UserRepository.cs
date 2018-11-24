@@ -1,9 +1,8 @@
 ﻿using Domain.Entities;
 using Infrastructure.DBConfiguration.EFCore;
-using Infrastructure.Interfaces.Repositories;
-using Infrastructure.Repositories.EFCore;
+using Infrastructure.Interfaces.Repositories.Domain;
+using Infrastructure.Repositories.Domain;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace UnitTest.Integration.Repositories.Repositories.EntityFramework

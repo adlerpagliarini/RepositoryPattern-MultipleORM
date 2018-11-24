@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using Domain.Interfaces.Services.Standard;
+﻿using Application.Interfaces.Services.Standard;
+using Domain.Entities;
 using Infrastructure.Interfaces.Repositories.Standard;
 using System.Collections.Generic;
 using System.Threading.Tasks;

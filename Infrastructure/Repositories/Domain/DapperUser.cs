@@ -1,18 +1,20 @@
 ﻿using Domain.Entities;
 using Infrastructure.DBConfiguration.Dapper;
 using Microsoft.Extensions.Options;
-using Infrastructure.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Dapper;
 using System.Linq;
 using Infrastructure.Repositories.Standard.Dapper;
-using Infrastructure.Interfaces.Repositories.Standard;
+using Infrastructure.Interfaces.Repositories.Domain;
+using Infrastructure.Interfaces.Repositories.Dapper;
 
-namespace Infrastructure.Repositories.Dapper
+namespace Infrastructure.Repositories.Domain
 {
-    public class DapperUser : RepositoryDapperAsync<User>, IUserRepository, IRepositoryBaseAsync<User>
+    public class DapperUser : DomainDapperRepository<User>, 
+                              IUserDapperRepository,
+                              IUserRepository
     {
         protected override string InsertQuery => "INSERT INTO Users VALUES (@Name)";
         protected override string InsertQueryReturnId => "INSERT INTO Users OUTPUT INSERTED.* VALUES (@Name)";
@@ -22,7 +24,7 @@ namespace Infrastructure.Repositories.Dapper
         protected override string SelectByIdQuery => "SELECT * FROM Users WHERE Id = @Id";
 
         private string SelectAllIncludingRelation => "SELECT u.*, t.* FROM Users u LEFT JOIN ToDoList t ON t.UserId = u.Id";
-
+        
         public DapperUser(IOptions<DataOptionFactory> databaseOptions) : base(databaseOptions)
         {
         }

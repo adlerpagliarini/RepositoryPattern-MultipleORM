@@ -9,8 +9,7 @@ using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories.Standard.EFCore
 {
-    public class RepositoryEntityFramework<TEntity> : SpecificsEFCore<TEntity>, 
-                                                      IRepositoryEFCore, 
+    public class RepositoryEntityFramework<TEntity> : SpecificMethodsEFCore<TEntity>, 
                                                       IRepositoryBase<TEntity> where TEntity : class, IIdentityEntity
     {
         protected readonly DbContext dbContext;
@@ -84,7 +83,7 @@ namespace Infrastructure.Repositories.Standard.EFCore
             return Commit();
         }
 
-        public int Commit()
+        private int Commit()
         {
             return dbContext.SaveChanges();
         }
