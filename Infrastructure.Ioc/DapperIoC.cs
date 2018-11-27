@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-using Infrastructure.DBConfiguration.Dapper;
-using Infrastructure.Interfaces.Repositories.Dapper;
+﻿using Infrastructure.DBConfiguration.Dapper;
 using Infrastructure.Interfaces.Repositories.Domain;
 using Infrastructure.Repositories.Domain;
 using Microsoft.Extensions.Configuration;

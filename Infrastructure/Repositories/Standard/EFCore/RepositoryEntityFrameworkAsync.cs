@@ -1,6 +1,5 @@
 ﻿using Domain.Entities;
 using Infrastructure.Interfaces.Repositories.Standard;
-using Infrastructure.Interfaces.Repositories.EFCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;

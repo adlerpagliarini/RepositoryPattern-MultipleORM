@@ -1,13 +1,14 @@
-﻿using Application.Interfaces.Services.Domain;
+﻿using System;
+using Application.Interfaces.Services.Domain;
 using Application.Services.Standard;
 using Domain.Entities;
 using Infrastructure.Interfaces.Repositories.Domain;
 
 namespace Application.Services.Domain
 {
-    public class UserEntityFrameworkService : ServiceBase<User>, IUserEntityFrameworkService
+    public class UserEntityFrameworkService : UserService<IUserEntityFrameworkRepository>, IUserEntityFrameworkService
     {
-        public UserEntityFrameworkService(IUserEntityFrameworkRepository repository) : base(repository)
+        public UserEntityFrameworkService(Func<Type, IUserRepository> repository) : base(repository)
         {
         }
     }

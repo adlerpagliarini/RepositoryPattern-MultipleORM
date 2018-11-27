@@ -1,7 +1,5 @@
-﻿using Domain.Entities;
-using Infrastructure.DBConfiguration.EFCore;
+﻿using Infrastructure.DBConfiguration.EFCore;
 using Infrastructure.Interfaces.Repositories.Domain;
-using Infrastructure.Interfaces.Repositories.EFCore;
 using Infrastructure.Repositories.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

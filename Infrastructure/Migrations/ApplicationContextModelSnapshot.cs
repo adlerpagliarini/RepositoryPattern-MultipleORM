@@ -19,15 +19,15 @@ namespace Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Domain.Entities.ToDoList", b =>
+            modelBuilder.Entity("Domain.Entities.TaskToDo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("TimeToEnd");
+                    b.Property<DateTime>("DeadLine");
 
-                    b.Property<DateTime>("TimeToStart");
+                    b.Property<DateTime>("Start");
 
                     b.Property<string>("Title");
 
@@ -37,7 +37,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("ToDoList");
+                    b.ToTable("TaskToDo");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -50,13 +50,13 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ToDoList", b =>
+            modelBuilder.Entity("Domain.Entities.TaskToDo", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
-                        .WithMany("ToDoList")
+                        .WithMany("TasksToDo")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

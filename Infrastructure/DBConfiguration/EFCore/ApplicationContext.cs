@@ -14,8 +14,8 @@ namespace Infrastructure.DBConfiguration.EFCore
             OperationId = Guid.NewGuid();
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<ToDoList> ToDoList { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<TaskToDo> TaskToDo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

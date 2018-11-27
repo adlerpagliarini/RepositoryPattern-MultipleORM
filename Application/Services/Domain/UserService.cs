@@ -14,7 +14,7 @@ namespace Application.Services.Domain
                                                 IUserService<TUserRepository>
                         where TUserRepository : IUserRepository
     {
-        public UserService(Func<Type, IUserRepository> repository) : base(repository(typeof(TUserRepository)))
+        internal UserService(Func<Type, IUserRepository> repository) : base(repository(typeof(TUserRepository)))
         {
         }
 

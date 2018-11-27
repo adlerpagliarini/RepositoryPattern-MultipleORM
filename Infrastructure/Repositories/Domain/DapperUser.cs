@@ -8,7 +8,6 @@ using Dapper;
 using System.Linq;
 using Infrastructure.Repositories.Standard.Dapper;
 using Infrastructure.Interfaces.Repositories.Domain;
-using Infrastructure.Interfaces.Repositories.Dapper;
 
 namespace Infrastructure.Repositories.Domain
 {
@@ -16,14 +15,14 @@ namespace Infrastructure.Repositories.Domain
                               IUserDapperRepository,
                               IUserRepository
     {
-        protected override string InsertQuery => "INSERT INTO Users VALUES (@Name)";
-        protected override string InsertQueryReturnId => "INSERT INTO Users OUTPUT INSERTED.* VALUES (@Name)";
-        protected override string UpdateByIdQuery => "UPDATE Users SET Name = @Name WHERE Id = @Id";
-        protected override string DeleteByIdQuery => "DELETE FROM Users WHERE Id = @Id";
-        protected override string SelectAllQuery => "SELECT * FROM Users";
-        protected override string SelectByIdQuery => "SELECT * FROM Users WHERE Id = @Id";
+        protected override string InsertQuery => "INSERT INTO [User] VALUES (@Name)";
+        protected override string InsertQueryReturnId => "INSERT INTO [User] OUTPUT INSERTED.* VALUES (@Name)";
+        protected override string UpdateByIdQuery => "UPDATE [User] SET Name = @Name WHERE Id = @Id";
+        protected override string DeleteByIdQuery => "DELETE FROM [User] WHERE Id = @Id";
+        protected override string SelectAllQuery => "SELECT * FROM [User]";
+        protected override string SelectByIdQuery => "SELECT * FROM [User] WHERE Id = @Id";
 
-        private string SelectAllIncludingRelation => "SELECT u.*, t.* FROM Users u LEFT JOIN ToDoList t ON t.UserId = u.Id";
+        private string SelectAllIncludingRelation => "SELECT u.*, t.* FROM [User] u LEFT JOIN [TaskToDo] t ON t.UserId = u.Id";
         
         public DapperUser(IOptions<DataOptionFactory> databaseOptions) : base(databaseOptions)
         {
@@ -32,8 +31,8 @@ namespace Infrastructure.Repositories.Domain
         public override IEnumerable<User> GetAll()
         {
             var userDictionary = new Dictionary<int, User>();
-            var queryResult = dbConn.Query<User, ToDoList, User>(SelectAllIncludingRelation,
-                map: (user, toDoList) => FuncMapRelation(user, toDoList, userDictionary));
+            var queryResult = dbConn.Query<User, TaskToDo, User>(SelectAllIncludingRelation,
+                map: (user, tasksToDo) => FuncMapRelation(user, tasksToDo, userDictionary));
 
             return queryResult.Distinct();
         }
@@ -41,13 +40,13 @@ namespace Infrastructure.Repositories.Domain
         public async override Task<IEnumerable<User>> GetAllAsync()
         {
             var userDictionary = new Dictionary<int, User>();
-            var queryResult = await dbConn.QueryAsync<User, ToDoList, User>(SelectAllIncludingRelation,
+            var queryResult = await dbConn.QueryAsync<User, TaskToDo, User>(SelectAllIncludingRelation,
                 map: (user, toDoList) => FuncMapRelation(user, toDoList, userDictionary));
 
             return queryResult.Distinct();
         }
 
-        private readonly Func<User, ToDoList, Dictionary<int, User>, User> FuncMapRelation = (user, toDoList, userDictionary) =>
+        private readonly Func<User, TaskToDo, Dictionary<int, User>, User> FuncMapRelation = (user, tasksToDo, userDictionary) =>
         {            
             if (!userDictionary.TryGetValue(user.Id, out User userEntry))
             {
@@ -55,7 +54,7 @@ namespace Infrastructure.Repositories.Domain
                 userDictionary.Add(userEntry.Id, userEntry);
             }
 
-            userEntry.AddItemToDo(toDoList);
+            userEntry.AddItemToDo(tasksToDo);
             return userEntry;
         };
     }

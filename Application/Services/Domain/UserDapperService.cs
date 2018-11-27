@@ -1,14 +1,12 @@
-﻿using Application.Interfaces.Services.Domain;
-using Application.Services.Standard;
-using Domain.Entities;
-using Infrastructure.Interfaces.Repositories.Dapper;
+﻿using System;
+using Application.Interfaces.Services.Domain;
 using Infrastructure.Interfaces.Repositories.Domain;
 
 namespace Application.Services.Domain
 {
-    public class UserDapperService : ServiceBase<User>, IUserDapperService
+    public class UserDapperService : UserService<IUserDapperRepository>, IUserDapperService
     {
-        public UserDapperService(IUserDapperRepository repository) : base(repository)
+        public UserDapperService(Func<Type, IUserRepository> repository) : base(repository)
         {
         }
     }

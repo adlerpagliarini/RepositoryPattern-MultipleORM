@@ -1,7 +1,6 @@
 ﻿using Domain.Entities;
 using Infrastructure.DBConfiguration.EFCore;
 using Infrastructure.Interfaces.Repositories.Domain;
-using Infrastructure.Interfaces.Repositories.EFCore;
 using Infrastructure.Repositories.Standard.EFCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +19,13 @@ namespace Infrastructure.Repositories.Domain
 
         public override IEnumerable<User> GetAll()
         {
-            IQueryable<User> query = GenerateQuery(null, null, "ToDoList");
+            IQueryable<User> query = GenerateQuery(null, null, nameof(User.TasksToDo));
             return query.AsEnumerable();
         }
 
         public async override Task<IEnumerable<User>> GetAllAsync()
         {
-            IQueryable<User> query = await Task.FromResult(GenerateQuery(null, null, "ToDoList"));
+            IQueryable<User> query = await Task.FromResult(GenerateQuery(null, null, nameof(User.TasksToDo)));
             return query.AsEnumerable();
         }
 

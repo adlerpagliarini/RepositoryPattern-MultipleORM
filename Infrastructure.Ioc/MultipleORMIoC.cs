@@ -1,7 +1,4 @@
-﻿using Domain.Entities;
-using Infrastructure.Interfaces.Repositories.Dapper;
-using Infrastructure.Interfaces.Repositories.Domain;
-using Infrastructure.Interfaces.Repositories.EFCore;
+﻿using Infrastructure.Interfaces.Repositories.Domain;
 using Infrastructure.Repositories.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using System;

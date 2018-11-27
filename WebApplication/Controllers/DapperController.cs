@@ -1,34 +1,29 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 using Application.Interfaces.Services.Domain;
-using Infrastructure.Interfaces.Repositories.Domain;
-using Infrastructure.Interfaces.Repositories.Dapper;
-using Infrastructure.Repositories.Domain;
 
 namespace WebApplication.Controllers
 {
     public class DapperController : Controller
     {
         // If using just InfrastructureDapper
-        private readonly IUserService<IUserDapperRepository> userServiceSingleORM;
+        //private readonly IUserService<IUserDapperRepository> userServiceSingleORM;
 
         // If using both InfrastructureDapper and InfrastructureEntityFramework
         private readonly IUserDapperService userService;
 
-        public DapperController(IUserDapperService userDapperService, IUserService<IUserDapperRepository> singleORM)
+        public DapperController(IUserDapperService userDapperService)
         {
             this.userService = userDapperService;
-            this.userServiceSingleORM = singleORM;
         }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
             var result = await userService.GetAllAsync();
-            return View(result.Take(10));
+            return View(result);
         }
 
         // GET: Users/Details/5

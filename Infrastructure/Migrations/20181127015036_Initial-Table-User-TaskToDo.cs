@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialTableUserTaskToDo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -18,44 +18,44 @@ namespace Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ToDoList",
+                name: "TaskToDo",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: true),
-                    TimeToStart = table.Column<DateTime>(nullable: false),
-                    TimeToEnd = table.Column<DateTime>(nullable: false),
+                    Start = table.Column<DateTime>(nullable: false),
+                    DeadLine = table.Column<DateTime>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ToDoList", x => x.Id);
+                    table.PrimaryKey("PK_TaskToDo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ToDoList_Users_UserId",
+                        name: "FK_TaskToDo_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ToDoList_UserId",
-                table: "ToDoList",
+                name: "IX_TaskToDo_UserId",
+                table: "TaskToDo",
                 column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ToDoList");
+                name: "TaskToDo");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "User");
         }
     }
 }

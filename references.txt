@@ -33,3 +33,10 @@ https://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b
 IOC Configuration
 https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.1
 https://docs.microsoft.com/pt-br/aspnet/core/fundamentals/configuration/options?view=aspnetcore-2.1
+
+GIT Renaming
+https://help.github.com/articles/renaming-a-remote/
+https://stackoverflow.com/questions/2041993/how-to-rename-a-git-repository
+
+Lazy Loading
+http://carloscds.net/2018/07/ef-core-lazy-loading/

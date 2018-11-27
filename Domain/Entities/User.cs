@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Domain.Entities
 {
@@ -8,16 +9,17 @@ namespace Domain.Entities
 
         public string Name { get; set; }
 
-        public virtual ICollection<ToDoList> ToDoList { get; private set; }
+        private ICollection<TaskToDo> _tasksToDo { get; set; }
+        public virtual IReadOnlyCollection<TaskToDo> TasksToDo { get { return _tasksToDo as Collection<TaskToDo>; }}
 
         public User()
         {
-            this.ToDoList = new HashSet<ToDoList>();
+            this._tasksToDo = new Collection<TaskToDo>();
         }
 
-        public void AddItemToDo(ToDoList todo)
+        public void AddItemToDo(TaskToDo todo)
         {
-            ToDoList.Add(todo);
+            _tasksToDo.Add(todo);
         }
     }
 }

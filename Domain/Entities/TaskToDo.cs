@@ -2,15 +2,15 @@
 
 namespace Domain.Entities
 {
-    public class ToDoList : IIdentityEntity
+    public class TaskToDo : IIdentityEntity
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         public string Title { get; set; }
 
-        public DateTime TimeToStart { get; set; }
+        public DateTime Start { get; set; }
 
-        public DateTime TimeToEnd { get; set; }
+        public DateTime DeadLine { get; set; }
 
         public int UserId { get; set; }
         public virtual User User { get; set; }
