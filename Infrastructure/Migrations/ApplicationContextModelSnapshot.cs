@@ -29,6 +29,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<DateTime>("Start");
 
+                    b.Property<bool>("Status");
+
                     b.Property<string>("Title");
 
                     b.Property<int>("UserId");

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20181127015036_Initial-Table-User-TaskToDo")]
-    partial class InitialTableUserTaskToDo
+    [Migration("20181128034808_Initial-Tables-User-TaskToDo")]
+    partial class InitialTablesUserTaskToDo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,8 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DeadLine");
 
                     b.Property<DateTime>("Start");
+
+                    b.Property<bool>("Status");
 
                     b.Property<string>("Title");
 

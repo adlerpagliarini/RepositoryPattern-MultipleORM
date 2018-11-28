@@ -24,6 +24,10 @@ namespace Infrastructure.IoC
             /*Users*/
             services.AddScoped<IUserRepository, DapperUser>();
             services.AddScoped<IUserDapperRepository, DapperUser>();
+
+            /*TaskToDo*/
+            services.AddScoped<ITaskToDoRepository, DapperTaskToDo>();
+            services.AddScoped<ITaskToDoDapperRepository, DapperTaskToDo>();
         }
     }
 }

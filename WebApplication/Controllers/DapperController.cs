@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entities;
 using Application.Interfaces.Services.Domain;
+using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
@@ -20,10 +21,12 @@ namespace WebApplication.Controllers
         }
 
         // GET: Users
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
             var result = await userService.GetAllAsync();
-            return View(result);
+            var viewModel = new IndexPageViewModel();
+
+            return View(viewModel.MapUsersToViewModel(id, result));
         }
 
         // GET: Users/Details/5

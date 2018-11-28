@@ -1,0 +1,9 @@
+﻿using Domain.Entities;
+using Infrastructure.Interfaces.Repositories.EFCore;
+
+namespace Infrastructure.Interfaces.Repositories.Domain
+{
+    public interface ITaskToDoEntityFrameworkRepository : ITaskToDoRepository, IEntityFrameworkRepository<TaskToDo>
+    {
+    }
+}

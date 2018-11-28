@@ -32,7 +32,7 @@ namespace Infrastructure.Repositories.Standard.EFCore
             return await Task.FromResult(dbSet);
         }
 
-        public async Task<TEntity> GetByIdAsync(object id)
+        public virtual async Task<TEntity> GetByIdAsync(object id)
         {
             return await dbSet.FindAsync(id);
         }

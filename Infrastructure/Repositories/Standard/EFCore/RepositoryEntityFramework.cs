@@ -44,7 +44,7 @@ namespace Infrastructure.Repositories.Standard.EFCore
             return GetYieldManipulated(dbSet, DoAction);
         }
 
-        public TEntity GetById(object id)
+        public virtual TEntity GetById(object id)
         {
             return dbSet.Find(id);
         }

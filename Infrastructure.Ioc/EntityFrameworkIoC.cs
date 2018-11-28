@@ -20,6 +20,10 @@ namespace Infrastructure.IoC
             /*Users*/
             services.AddScoped<IUserRepository, EntityFrameworkUser>();
             services.AddScoped<IUserEntityFrameworkRepository, EntityFrameworkUser>();
+
+            /*TaskToDo*/
+            services.AddScoped<ITaskToDoRepository, EntityFrameworkTaskToDo>();
+            services.AddScoped<ITaskToDoEntityFrameworkRepository, EntityFrameworkTaskToDo>();
         }
     }
 }

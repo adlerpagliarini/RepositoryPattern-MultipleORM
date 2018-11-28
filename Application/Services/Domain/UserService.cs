@@ -10,11 +10,11 @@ using System;
 
 namespace Application.Services.Domain
 {
-    public class UserService<TUserRepository> : ServiceBase<User>, 
-                                                IUserService<TUserRepository>
-                        where TUserRepository : IUserRepository
+    public class UserService<TRepository> : ServiceBase<User>, 
+                                            IUserService<TRepository>
+                        where TRepository : IUserRepository
     {
-        internal UserService(Func<Type, IUserRepository> repository) : base(repository(typeof(TUserRepository)))
+        internal UserService(Func<Type, IUserRepository> repository) : base(repository(typeof(TRepository)))
         {
         }
 

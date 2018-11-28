@@ -4,7 +4,7 @@ using Infrastructure.Interfaces.Repositories.Domain;
 
 namespace Application.Interfaces.Services.Domain
 {
-    public interface IUserDapperService : IUserService<IUserDapperRepository>, IServiceBase<User>
+    public interface ITaskToDoDapperService : ITaskToDoService<ITaskToDoDapperRepository>, IServiceBase<TaskToDo>
     {
     }
 }

@@ -10,6 +10,7 @@ namespace Infrastructure.IoC
     {
         public static void InfrastructureORMs(this IServiceCollection services)
         {
+            /*User*/
             services.AddScoped<DapperUser>();
             services.AddScoped<EntityFrameworkUser>();
 
@@ -24,6 +25,16 @@ namespace Infrastructure.IoC
                     return provider.GetService<EntityFrameworkUser>();
 
                 throw new KeyNotFoundException();*/
+            });
+
+            /*TaskToDo*/
+            services.AddScoped<DapperTaskToDo>();
+            services.AddScoped<EntityFrameworkTaskToDo>();
+
+            services.AddScoped<Func<Type, ITaskToDoRepository>>(provider => type =>
+            {
+                var instance = provider.GetService(type);
+                return (ITaskToDoRepository)instance ?? throw new NotImplementedException();
             });
         }
     }

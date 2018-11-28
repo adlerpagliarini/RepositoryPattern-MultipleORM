@@ -14,6 +14,10 @@ namespace Application.IoC
             services.AddScoped(typeof(IUserService<>), typeof(UserService<>));
             services.AddScoped<IUserEntityFrameworkService, UserEntityFrameworkService>();
             services.AddScoped<IUserDapperService, UserDapperService>();
+
+            services.AddScoped(typeof(ITaskToDoService<>), typeof(TaskToDoService<>));
+            services.AddScoped<ITaskToDoEntityFrameworkService, TaskToDoEntityFrameworkService>();
+            services.AddScoped<ITaskToDoDapperService, TaskToDoDapperService>();
         }
     }
 }

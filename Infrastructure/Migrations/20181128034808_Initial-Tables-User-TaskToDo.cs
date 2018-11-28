@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Migrations
 {
-    public partial class InitialTableUserTaskToDo : Migration
+    public partial class InitialTablesUserTaskToDo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,7 @@ namespace Infrastructure.Migrations
                     Title = table.Column<string>(nullable: true),
                     Start = table.Column<DateTime>(nullable: false),
                     DeadLine = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
                     UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
