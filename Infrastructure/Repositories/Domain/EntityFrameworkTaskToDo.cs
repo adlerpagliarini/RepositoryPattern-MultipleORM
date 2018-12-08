@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 namespace Infrastructure.Repositories.Domain
 {
     public class EntityFrameworkTaskToDo : RepositoryEntityFrameworkAsync<TaskToDo>,
-                                       ITaskToDoEntityFrameworkRepository,
-                                       ITaskToDoRepository
+                                           ITaskToDoEntityFrameworkRepository,
+                                           ITaskToDoRepository
     {
         public EntityFrameworkTaskToDo(ApplicationContext dbContext) : base(dbContext)
         {

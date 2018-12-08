@@ -12,8 +12,8 @@ using Infrastructure.Interfaces.Repositories.Domain;
 namespace Infrastructure.Repositories.Domain
 {
     public class DapperTaskToDo : DomainDapperRepository<TaskToDo>, 
-                              ITaskToDoDapperRepository,
-                              ITaskToDoRepository
+                                  ITaskToDoDapperRepository,
+                                  ITaskToDoRepository
     {
         protected override string InsertQuery => "INSERT INTO [TaskToDo] VALUES (@Title, @Start, @Deadline, @Status, @UserId)";
         protected override string InsertQueryReturnId => "INSERT INTO [TaskToDo] OUTPUT INSERTED.* VALUES (@Title, @Start, @Deadline, @Status, @UserId)";
